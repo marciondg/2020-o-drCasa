@@ -1,0 +1,32 @@
+import personas.*
+import enfermedades.*
+
+describe "Temporada 1" {
+	const malaria = new EnfermedadInfecciosa(cantDeCelulasAmenazadas = 5000)
+	const otitis = new EnfermedadInfecciosa(cantDeCelulasAmenazadas = 1000)
+	const lupus = new EnfermedadAutoinmune(cantDeCelulasAmenazadas = 5000)
+	const malariaPulenta = new EnfermedadInfecciosa(cantDeCelulasAmenazadas = 80000)
+	const logan = new Persona()
+	const frank = new Persona(cantidadDeCelulas = 3500000)
+	
+	fixture {
+		logan.contraer(malaria)
+		logan.contraer(otitis)
+		logan.contraer(lupus)
+	}
+	
+	test "Persona contrae enfermedad" {
+		frank.contraer(malariaPulenta)
+		assert.that(frank.tiene(malariaPulenta))
+	}
+	
+	test "Enfermedad infecciosa se reproduce" {
+		malaria.reproducir()
+		assert.equals(10000, malaria.cantDeCelulasAmenazadas())
+	}
+	
+	test "Persona vive un día" {
+		logan.vivir()
+		// TODO: Verificar que logan haya quedado con la temperatura y células esperadas 
+	}
+}
