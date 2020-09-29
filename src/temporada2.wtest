@@ -29,7 +29,7 @@ describe "Temporada 2" {
 	
 	test "Las enfermedades autoinmunes se atenuan correctamente"{
 		const celulasInicialesMalaria = lupus.cantDeCelulasAmenazadas()
-		
+			
 		lupus.atenuar(2)
 		
 		assert.equals(celulasInicialesMalaria - 30,lupus.cantDeCelulasAmenazadas())
