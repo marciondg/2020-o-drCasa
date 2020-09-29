@@ -18,6 +18,16 @@ class EnfermedadInfecciosa {
 	}
 		
 	method cantDeCelulasAmenazadas() = cantDeCelulasAmenazadas
+	
+	method modificarCantCelulasAmenazadas(cantCelulas) {
+		cantDeCelulasAmenazadas += cantCelulas
+		cantDeCelulasAmenazadas = cantDeCelulasAmenazadas.max(0)
+	}
+	
+	method atenuar(dosis) {
+		self.modificarCantCelulasAmenazadas(-15 * dosis)
+	}
+	
 }
 
 class EnfermedadAutoinmune {
@@ -35,6 +45,15 @@ class EnfermedadAutoinmune {
 	
 	method cantDeCelulasAmenazadas() = cantDeCelulasAmenazadas
 	
+	method modificarCantCelulasAmenazadas(cantCelulas) {
+		cantDeCelulasAmenazadas += cantCelulas
+		cantDeCelulasAmenazadas = cantDeCelulasAmenazadas.max(0)
+	}
+	
+	
+	method atenuar(dosis) {
+		self.modificarCantCelulasAmenazadas(-15 * dosis)
+	}
 	
 }
 

@@ -1,0 +1,38 @@
+import personas.*
+import enfermedades.*
+
+describe "Temporada 2" {
+	const malaria = new EnfermedadInfecciosa(cantDeCelulasAmenazadas = 5000)
+	const otitis = new EnfermedadInfecciosa(cantDeCelulasAmenazadas = 1000)
+	const lupus = new EnfermedadAutoinmune(cantDeCelulasAmenazadas = 5000)
+	const malariaPulenta = new EnfermedadInfecciosa(cantDeCelulasAmenazadas = 80000)
+	var otitisAgresiva = new EnfermedadInfecciosa(cantDeCelulasAmenazadas = 300001)
+	
+	const logan = new Persona()
+	const frank = new Persona(cantidadDeCelulas = 3500000)
+	const roberto = new Persona(temperatura = 36, cantidadDeCelulas = 3000000, enfermedades = [ malaria, otitis, lupus, otitisAgresiva, otitisAgresiva ])
+	
+	fixture {
+		logan.contraer(malaria)
+		logan.contraer(otitis)
+		logan.contraer(lupus)
+	}
+	
+	test "Las enfermedades infeccionsas se atenuan correctamente"{
+		const celulasInicialesMalaria = malaria.cantDeCelulasAmenazadas()
+		
+		malaria.atenuar(2)
+		
+		assert.equals(celulasInicialesMalaria - 30,malaria.cantDeCelulasAmenazadas())
+		
+	}
+	
+	test "Las enfermedades autoinmunes se atenuan correctamente"{
+		const celulasInicialesMalaria = lupus.cantDeCelulasAmenazadas()
+		
+		lupus.atenuar(2)
+		
+		assert.equals(celulasInicialesMalaria - 30,lupus.cantDeCelulasAmenazadas())
+		
+	}
+}
