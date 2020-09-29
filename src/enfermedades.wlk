@@ -13,8 +13,11 @@ class Enfermedad {
 		cantDeCelulasAmenazadas = cantDeCelulasAmenazadas.max(0)
 	}
 	
-	method atenuar(dosis) {
+	method atenuar(dosis,persona) {
 		self.modificarCantCelulasAmenazadas(-15 * dosis)
+		if(cantDeCelulasAmenazadas == 0){
+			persona.curarseDe(self)
+		}
 	}
 	
 }

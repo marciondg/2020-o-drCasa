@@ -7,7 +7,9 @@
 class Persona {
 	var temperatura = 36
 	var cantidadDeCelulas = 3000000
-	const enfermedades = #{}
+	var enfermedades = #{}
+	
+	method enfermedades() = enfermedades
 	
 	method vivir() {
 		enfermedades.forEach({enfermedad =>
@@ -56,11 +58,27 @@ class Persona {
 	method enfermedadQueAmenazaMasCelulas() {
 		enfermedades.max({ enfermedad => enfermedad.cantDeCelulasAmenazadas()})
 	}
-	
+		
 	method estaEnComa() {
 		return temperatura == 45 || cantidadDeCelulas < 1000000
 	}
 	
+	method recibirMedicamento(dosis){
+		enfermedades.forEach({enfermedad => enfermedad.atenuar(dosis,self)})
+	}
+	
+	method curarseDe(enfermedad){
+		enfermedades.remove(enfermedad)
+	}
+	
+}
+
+class Medico{
+	var dosis
+	
+	method atender(paciente){
+		paciente.recibirMedicamento(dosis)
+	}
 }
 
 

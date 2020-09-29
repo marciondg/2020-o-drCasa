@@ -12,6 +12,8 @@ describe "Temporada 2" {
 	const frank = new Persona(cantidadDeCelulas = 3500000)
 	const roberto = new Persona(temperatura = 36, cantidadDeCelulas = 3000000, enfermedades = [ malaria, otitis, lupus, otitisAgresiva, otitisAgresiva ])
 	
+	const cameron = new Medico(dosis = 5)
+	
 	fixture {
 		logan.contraer(malaria)
 		logan.contraer(otitis)
@@ -21,7 +23,7 @@ describe "Temporada 2" {
 	test "Las enfermedades infeccionsas se atenuan correctamente"{
 		const celulasInicialesMalaria = malaria.cantDeCelulasAmenazadas()
 		
-		malaria.atenuar(2)
+		malaria.atenuar(2,logan)
 		
 		assert.equals(celulasInicialesMalaria - 30,malaria.cantDeCelulasAmenazadas())
 		
@@ -30,9 +32,30 @@ describe "Temporada 2" {
 	test "Las enfermedades autoinmunes se atenuan correctamente"{
 		const celulasInicialesMalaria = lupus.cantDeCelulasAmenazadas()
 			
-		lupus.atenuar(2)
+		lupus.atenuar(2,logan)
 		
 		assert.equals(celulasInicialesMalaria - 30,lupus.cantDeCelulasAmenazadas())
 		
 	}
+	
+	test "cuando una enfermedad se atenua y que da en cero, es removida"{
+		const celulasInicialesMalaria = lupus.cantDeCelulasAmenazadas()
+			
+		lupus.atenuar(50000000000000,logan)
+		
+		assert.notThat(logan.enfermedades().contains(lupus));
+		
+	}
+	
+	test "Cuando un doctor atiende a un paciente, las enfermedades son atenuadas"{
+		var cantPreviaCelulasAfectadasMalaria = malaria.cantDeCelulasAmenazadas()
+		var cantPreviaCelulasAfectadasOtitis = otitis.cantDeCelulasAmenazadas()
+		var cantPreviaCelulasAfectadasLupus = lupus.cantDeCelulasAmenazadas()
+		cameron.atender(logan)
+		assert.equals(cantPreviaCelulasAfectadasMalaria - 75, malaria.cantDeCelulasAmenazadas())
+		assert.equals(cantPreviaCelulasAfectadasOtitis - 75, otitis.cantDeCelulasAmenazadas())
+		assert.equals(cantPreviaCelulasAfectadasLupus - 75, lupus.cantDeCelulasAmenazadas())
+	}
+	
+	
 }
