@@ -6,8 +6,11 @@ describe "Temporada 1" {
 	const otitis = new EnfermedadInfecciosa(cantDeCelulasAmenazadas = 1000)
 	const lupus = new EnfermedadAutoinmune(cantDeCelulasAmenazadas = 5000)
 	const malariaPulenta = new EnfermedadInfecciosa(cantDeCelulasAmenazadas = 80000)
+	var otitisAgresiva = new EnfermedadInfecciosa(cantDeCelulasAmenazadas = 300001)
+	
 	const logan = new Persona()
 	const frank = new Persona(cantidadDeCelulas = 3500000)
+	const roberto = new Persona(temperatura = 36, cantidadDeCelulas = 3000000, enfermedades = [ malaria, otitis, lupus, otitisAgresiva, otitisAgresiva ])
 	
 	fixture {
 		logan.contraer(malaria)
@@ -26,7 +29,35 @@ describe "Temporada 1" {
 	}
 	
 	test "Persona vive un día" {
+		const cantCelulasAntesDeSerAfectadas = logan.cantidadDeCelulas()
+		const temperaturaAntesDeSerAfectada = logan.temperatura()
 		logan.vivir()
-		// TODO: Verificar que logan haya quedado con la temperatura y células esperadas 
+		assert.equals(cantCelulasAntesDeSerAfectadas - 5000, logan.cantidadDeCelulas())
+		assert.equals(temperaturaAntesDeSerAfectada + 6, logan.temperatura())	
 	}
+	
+	test "La cantidad total de celulas amenazadas por enfermedades agresivas es la suma de las celulas que amenaza cada  enfermedad agresiva" {
+		const cantidadCelulasAmenazadasOtitis = otitisAgresiva.cantDeCelulasAmenazadas() * 2;
+		
+		const cantidadCelulasAmenazadas = roberto.cantCelulasAmenazadasPorEnfermedadesAgresivas();
+		
+		assert.equals(cantidadCelulasAmenazadasOtitis, cantidadCelulasAmenazadas)
+	}
+	
+	test "La temperatura de una persona no puede subir a mas de 45 grados" {
+		logan.subirTemperatura(10)
+		assert.equals(45, logan.temperatura())
+	}
+		
+	test "Una persona esta en coma cuando su temperatura es 45" {
+		logan.subirTemperatura(45)
+
+		assert.that(logan.estaEnComa())
+	}
+
+	test "Una persona esta en coma cuando su cantidad de celulas es menor a 1000000" {
+		logan.cantidadDeCelulas(999999)
+		assert.that(logan.estaEnComa())
+	}
+	
 }
