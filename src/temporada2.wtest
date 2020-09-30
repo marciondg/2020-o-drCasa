@@ -50,9 +50,9 @@ describe "Temporada 2" {
 	}
 	
 	test "Cuando un medico atiende a un paciente, las enfermedades son atenuadas"{
-		var cantPreviaCelulasAfectadasMalaria = malaria.cantDeCelulasAmenazadas()
-		var cantPreviaCelulasAfectadasOtitis = otitis.cantDeCelulasAmenazadas()
-		var cantPreviaCelulasAfectadasLupus = lupus.cantDeCelulasAmenazadas()
+		const cantPreviaCelulasAfectadasMalaria = malaria.cantDeCelulasAmenazadas()
+		const cantPreviaCelulasAfectadasOtitis = otitis.cantDeCelulasAmenazadas()
+		const cantPreviaCelulasAfectadasLupus = lupus.cantDeCelulasAmenazadas()
 		cameron.atender(logan)
 		assert.equals(cantPreviaCelulasAfectadasMalaria - 75, malaria.cantDeCelulasAmenazadas())
 		assert.equals(cantPreviaCelulasAfectadasOtitis - 75, otitis.cantDeCelulasAmenazadas())
@@ -60,20 +60,20 @@ describe "Temporada 2" {
 	}
 	
 	test "Cuando un medico  se contagia, se atiende a si mismo"{
-		var cantPreviaCelulasAfectadasMalaria = malaria.cantDeCelulasAmenazadas()
+		const cantPreviaCelulasAfectadasMalaria = malaria.cantDeCelulasAmenazadas()
 		cameron.contraer(malaria)
 		assert.equals(cantPreviaCelulasAfectadasMalaria - 75, malaria.cantDeCelulasAmenazadas())
 	}
 	
 	test "cuando un jefe medico se enferma, le pide un subordinado que lo cure"{
-		var cantPreviaCelulasAfectadasMalaria = malaria.cantDeCelulasAmenazadas()
+		const cantPreviaCelulasAfectadasMalaria = malaria.cantDeCelulasAmenazadas()
 		house.contraer(malaria)
 
 		assert.equals(cantPreviaCelulasAfectadasMalaria - 105, malaria.cantDeCelulasAmenazadas())		
 	}
 
 	test "cuando un jefe medico atiende a alguien, le pide a un subordinado que lo haga"{
-		var cantPreviaCelulasAfectadasMalaria = malaria.cantDeCelulasAmenazadas() 
+		const cantPreviaCelulasAfectadasMalaria = malaria.cantDeCelulasAmenazadas() 
 		const cantidadDeCelulasCuradasPorCameron = 75;
 		cameron.contraer(malaria)
 		
@@ -82,5 +82,9 @@ describe "Temporada 2" {
 		assert.equals(cantPreviaCelulasAfectadasMalaria - 105 - cantidadDeCelulasCuradasPorCameron, malaria.cantDeCelulasAmenazadas())
 	}
 	
-	
+	test "Cuando una persona con la pinche muerte pasa un dia su temperatura baja a 0" {
+		house.contraer(laPincheMuerte)
+		house.vivir()
+		assert.equals(0, house.temperatura())
+	}
 }

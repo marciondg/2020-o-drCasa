@@ -52,3 +52,18 @@ class EnfermedadAutoinmune inherits Enfermedad{
 	
 }
 
+
+object laPincheMuerte {
+
+	method atenuar(dosis, persona) {
+	}
+
+	method producirEfecto(persona) {
+		persona.bajarTemperaturaA0()
+	}
+
+	method esAgresiva(persona) {
+		return true
+	}
+
+}

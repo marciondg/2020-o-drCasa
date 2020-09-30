@@ -35,6 +35,10 @@ class Persona {
 		temperatura = 45.min(temperatura + cantidad)
 	}
 	
+	method bajarTemperaturaA0(){
+		temperatura = 0
+	}
+	
 	method destruirCelulas(cantidad) {
 		cantidadDeCelulas -= cantidad
 	}
