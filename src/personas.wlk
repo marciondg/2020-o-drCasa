@@ -73,11 +73,16 @@ class Persona {
 	
 }
 
-class Medico{
+class Medico inherits Persona{
 	var dosis
 	
 	method atender(paciente){
 		paciente.recibirMedicamento(dosis)
+	}
+	
+	override method contraer(enfermedad){
+		super(enfermedad)
+		self.atender(self)
 	}
 }
 

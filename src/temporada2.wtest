@@ -57,5 +57,11 @@ describe "Temporada 2" {
 		assert.equals(cantPreviaCelulasAfectadasLupus - 75, lupus.cantDeCelulasAmenazadas())
 	}
 	
+	test "Cuando un doctor se contagia, se atiende a si mismo"{
+		var cantPreviaCelulasAfectadasMalaria = malaria.cantDeCelulasAmenazadas()
+		cameron.contraer(malaria)
+		assert.equals(cantPreviaCelulasAfectadasMalaria - 75, malaria.cantDeCelulasAmenazadas())
+	}
+	
 	
 }
