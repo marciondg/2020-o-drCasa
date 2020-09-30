@@ -12,7 +12,9 @@ describe "Temporada 2" {
 	const frank = new Persona(cantidadDeCelulas = 3500000)
 	const roberto = new Persona(temperatura = 36, cantidadDeCelulas = 3000000, enfermedades = [ malaria, otitis, lupus, otitisAgresiva, otitisAgresiva ])
 	
+	const goku = new Medico(temperatura = 36, cantidadDeCelulas = 3000000, dosis = 7)
 	const cameron = new Medico(dosis = 5)
+	const house = new JefeDeDepartamento(temperatura = 36, cantidadDeCelulas = 3000000, subordinados = [ goku ], dosis = 100)
 	
 	fixture {
 		logan.contraer(malaria)
@@ -47,7 +49,7 @@ describe "Temporada 2" {
 		
 	}
 	
-	test "Cuando un doctor atiende a un paciente, las enfermedades son atenuadas"{
+	test "Cuando un medico atiende a un paciente, las enfermedades son atenuadas"{
 		var cantPreviaCelulasAfectadasMalaria = malaria.cantDeCelulasAmenazadas()
 		var cantPreviaCelulasAfectadasOtitis = otitis.cantDeCelulasAmenazadas()
 		var cantPreviaCelulasAfectadasLupus = lupus.cantDeCelulasAmenazadas()
@@ -57,10 +59,27 @@ describe "Temporada 2" {
 		assert.equals(cantPreviaCelulasAfectadasLupus - 75, lupus.cantDeCelulasAmenazadas())
 	}
 	
-	test "Cuando un doctor se contagia, se atiende a si mismo"{
+	test "Cuando un medico  se contagia, se atiende a si mismo"{
 		var cantPreviaCelulasAfectadasMalaria = malaria.cantDeCelulasAmenazadas()
 		cameron.contraer(malaria)
 		assert.equals(cantPreviaCelulasAfectadasMalaria - 75, malaria.cantDeCelulasAmenazadas())
+	}
+	
+	test "cuando un jefe medico se enferma, le pide un subordinado que lo cure"{
+		var cantPreviaCelulasAfectadasMalaria = malaria.cantDeCelulasAmenazadas()
+		house.contraer(malaria)
+
+		assert.equals(cantPreviaCelulasAfectadasMalaria - 105, malaria.cantDeCelulasAmenazadas())		
+	}
+
+	test "cuando un jefe medico atiende a alguien, le pide a un subordinado que lo haga"{
+		var cantPreviaCelulasAfectadasMalaria = malaria.cantDeCelulasAmenazadas() 
+		const cantidadDeCelulasCuradasPorCameron = 75;
+		cameron.contraer(malaria)
+		
+		house.atender(cameron)
+
+		assert.equals(cantPreviaCelulasAfectadasMalaria - 105 - cantidadDeCelulasCuradasPorCameron, malaria.cantDeCelulasAmenazadas())
 	}
 	
 	
