@@ -36,6 +36,31 @@ class Persona {
 	method destruirCelulas(cantidad) {
 		cantidadDeCelulas -= cantidad
 	}
+	
+	method cantidadDeCelulas() = cantidadDeCelulas
+
+	method cantidadDeCelulas(nuevaCantidadDeCelulas){
+		cantidadDeCelulas = nuevaCantidadDeCelulas;
+	}
+	
+	method temperatura() = temperatura
+		
+	method enfermedadesAgresivas() {
+		return enfermedades.filter({ enfermedad => enfermedad.esAgresiva(self) })
+	}
+	
+	method cantCelulasAmenazadasPorEnfermedadesAgresivas() {
+		return self.enfermedadesAgresivas().sum({ enfermedad => enfermedad.cantDeCelulasAmenazadas() })
+	}
+
+	method enfermedadQueAmenazaMasCelulas() {
+		enfermedades.max({ enfermedad => enfermedad.cantDeCelulasAmenazadas()})
+	}
+	
+	method estaEnComa() {
+		return temperatura == 45 || cantidadDeCelulas < 1000000
+	}
+	
 }
 
 
