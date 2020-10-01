@@ -7,7 +7,7 @@
 class Persona {
 	var temperatura = 36
 	var cantidadDeCelulas = 3000000
-	const enfermedades = #{}
+	const property enfermedades = #{}
 	
 	method vivir() {
 		enfermedades.forEach({enfermedad =>
@@ -61,6 +61,41 @@ class Persona {
 		return temperatura == 45 || cantidadDeCelulas < 1000000
 	}
 	
+	method curarseDe(enfermedad){
+		enfermedades.remove(enfermedad)
+	}
+	
+	method recibirMedicamento(dosis){
+		enfermedades
+			.forEach({enfermedad => enfermedad.atenuar(dosis,self)})
+	}
+	
+	method disminuirTodaLaTemperatura(){
+		temperatura = 0
+	}
 }
+
+class Medico inherits Persona{
+	const dosis
+	
+	method atender(persona){
+		persona.recibirMedicamento(dosis)
+	}
+	
+	override method contraer(enfermedad) {
+		super(enfermedad)
+		self.atender(self)
+	}		
+
+}
+
+class JefeDepartamento inherits Medico{
+	const subordinados = #{}
+	
+	override method atender(persona){
+		subordinados.anyOne().atender(persona)
+	}
+}
+
 
 
