@@ -2,8 +2,26 @@
 // Hacer que una enfermedad infecciosa se reproduzca.
 // malaria.reproducir()
 
-class EnfermedadInfecciosa {
+
+class EnfermedadDeCelulas {
 	var cantDeCelulasAmenazadas
+	
+	method cantDeCelulasAmenazadas() = cantDeCelulasAmenazadas
+
+	method atenuar(dosis,persona){
+		self.disminuirCelulas(dosis)
+		if(cantDeCelulasAmenazadas == 0){
+			persona.curarseDe(self)
+		}
+	}
+	
+	method disminuirCelulas(dosis) {
+		cantDeCelulasAmenazadas =  (cantDeCelulasAmenazadas - 15 * dosis).max(0)
+	}
+	
+}
+
+class EnfermedadInfecciosa inherits EnfermedadDeCelulas {
 	
 	method producirEfecto(persona){
 		persona.subirTemperatura(cantDeCelulasAmenazadas / 1000)
@@ -17,11 +35,9 @@ class EnfermedadInfecciosa {
 		return cantDeCelulasAmenazadas > persona.cantidadDeCelulas() * 0.1
 	}
 		
-	method cantDeCelulasAmenazadas() = cantDeCelulasAmenazadas
 }
 
-class EnfermedadAutoinmune {
-	var cantDeCelulasAmenazadas
+class EnfermedadAutoinmune inherits EnfermedadDeCelulas {
 	var cantVecesQueAfectoPersona = 0
 	
 	method producirEfecto(persona){
@@ -33,8 +49,11 @@ class EnfermedadAutoinmune {
 		return cantVecesQueAfectoPersona > 30
 	}
 	
-	method cantDeCelulasAmenazadas() = cantDeCelulasAmenazadas
-	
-	
+}
+
+object laHipotermia {
+	method producirEfecto(persona){
+		persona.disminuirTodaLaTemperatura()
+	}
 }
 

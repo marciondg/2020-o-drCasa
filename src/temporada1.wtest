@@ -60,4 +60,13 @@ describe "Temporada 1" {
 		assert.that(logan.estaEnComa())
 	}
 	
+	test "Una enfermadad autoinmune con mas de 30 dias en la persona debe ser agresiva"{
+		//31.times({ () => enfermedadPersistente.producirEfecto(logan)})		
+		
+		const enfermedadPersistente = 
+			new EnfermedadAutoinmune(cantDeCelulasAmenazadas = 5000, cantVecesQueAfectoPersona = 31)
+
+		assert.that(enfermedadPersistente.esAgresiva(logan))
+		
+	}
 }
